@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-const TELEGRAM_URL = "https://t.me/your_tfbd_group" // TODO: replace with your real Telegram invite link
+const TELEGRAM_URL = "https://t.me/TFBDMap" // TODO: replace with your real Telegram invite link
 
 export function Hero() {
   return (
