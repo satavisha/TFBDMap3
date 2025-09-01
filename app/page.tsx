@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import FiltersSidebar from "@/components/FiltersSidebar";
-import EventsTable from "@/components/events-table";
+import { EventsTable } from "@/components/events-table"; // ✅ fixed import
 
 export default function HomePage() {
   // Shared filter state
