@@ -6,7 +6,7 @@ import { useEvents } from "@/components/use-events"
 import { splitEvents } from "@/components/event-helpers"
 import { EventsTable } from "@/components/events-table"
 
-const TELEGRAM_URL = "https://t.me/your_tfbd_group" // TODO: replace with your real Telegram invite link
+const TELEGRAM_URL = "https://t.me/TFBDMap" // TODO: replace with your real Telegram invite link
 
 export default function Page() {
   const { events, isLoading, error } = useEvents()
