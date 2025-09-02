@@ -1,10 +1,9 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { useLanguage } from "./language-context";
 
 export default function FiltersSidebar({ filters, setFilters }: any) {
   const [open, setOpen] = useState(false);
-  const { t } = useLanguage();
 
   const toggleSidebar = () => setOpen(!open);
 
@@ -12,12 +11,13 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
     <>
       {/* Filter Button */}
       <div className="flex justify-end mb-4">
-        <button
+        <Button
+          variant="outline"
           onClick={toggleSidebar}
-          className="px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 transition-colors"
+          className="shadow-sm"
         >
-          {t('filters')}
-        </button>
+          Filters
+        </Button>
       </div>
 
       {/* Overlay */}
@@ -35,7 +35,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
         }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-semibold">{t('filters')}</h2>
+          <h2 className="text-lg font-semibold">Filters</h2>
           <button onClick={toggleSidebar}>
             <X className="w-5 h-5" />
           </button>
@@ -44,7 +44,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
         <div className="p-4 space-y-6">
           {/* Type */}
           <div>
-            <h3 className="text-sm font-medium mb-2">{t('type')}</h3>
+            <h3 className="text-sm font-medium mb-2">Type</h3>
             <div className="flex flex-col gap-2">
               {["Event", "Festival", "Retreat"].map((type) => (
                 <label key={type} className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
 
           {/* Teachers */}
           <div>
-            <h3 className="text-sm font-medium mb-2">{t('teachers')}</h3>
+            <h3 className="text-sm font-medium mb-2">Teachers</h3>
             <div className="flex flex-col gap-2">
               {["Moria Chappell", "Zoe Jakes", "Illan Rivière"].map(
                 (teacher) => (
@@ -89,12 +89,13 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
           </div>
 
           {/* Clear */}
-          <button
+          <Button
+            variant="outline"
             onClick={() => setFilters({ type: [], teachers: [] })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="w-full"
           >
-            {t('clear_all')}
-          </button>
+            Clear All
+          </Button>
         </div>
       </div>
     </>
