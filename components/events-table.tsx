@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 import type { EventItem } from "./types"
 import { applyFilters, useFilters } from "./filters"
+import { useLanguage } from "./language-context"
 
 type Props = {
   title: string
@@ -14,6 +15,8 @@ type Props = {
 
 export function EventsTable({ title, events, defaultOpen = true, collapsible = false }: Props) {
   const [open, setOpen] = useState(defaultOpen)
+  const { t } = useLanguage()
+  
   const {
     filters,
     setQuery,
@@ -35,7 +38,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <input
             type="search"
-            placeholder="Search all fields..."
+            placeholder={t('search_placeholder')}
             value={filters.query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full md:w-64 rounded-md border border-(--color-brand)/20 bg-white px-3 py-2 text-sm text-(--color-brand) placeholder:text-(--color-brand)/50 focus:outline-none focus:ring-2 focus:ring-(--color-teal)"
@@ -57,7 +60,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
             </select>
 
             <details className="rounded-md border border-(--color-brand)/20 bg-white text-sm open:ring-2 open:ring-(--color-teal)">
-              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">Type</summary>
+              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">{t('type')}</summary>
               <div className="max-h-56 w-56 overflow-auto p-3">
                 {typeOptions.map((t) => {
                   const checked = filters.types.has(t)
@@ -72,7 +75,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
             </details>
 
             <details className="rounded-md border border-(--color-brand)/20 bg-white text-sm open:ring-2 open:ring-(--color-teal)">
-              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">Teachers</summary>
+              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">{t('teachers')}</summary>
               <div className="max-h-56 w-64 overflow-auto p-3">
                 {teacherOptions.map((t) => {
                   const checked = filters.teachers.has(t)
@@ -96,7 +99,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
               className="rounded-md border border-(--color-brand)/20 bg-white px-3 py-2 text-sm text-(--color-brand) hover:bg-(--color-gold)/20"
               aria-label="Clear all filters"
             >
-              Clear
+              {t('clear')}
             </button>
           </div>
         </div>
@@ -106,13 +109,13 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
         <table className="min-w-full text-sm">
           <thead className="bg-(--color-cream)">
             <tr className="text-left text-(--color-brand)">
-              <th className="px-3 py-2">Event Name</th>
-              <th className="px-3 py-2">Type</th>
-              <th className="px-3 py-2">Location</th>
-              <th className="px-3 py-2">Start Date</th>
-              <th className="px-3 py-2">End Date</th>
-              <th className="px-3 py-2">Teachers</th>
-              <th className="px-3 py-2">Website</th>
+              <th className="px-3 py-2">{t('event_name')}</th>
+              <th className="px-3 py-2">{t('type')}</th>
+              <th className="px-3 py-2">{t('location')}</th>
+              <th className="px-3 py-2">{t('start_date')}</th>
+              <th className="px-3 py-2">{t('end_date')}</th>
+              <th className="px-3 py-2">{t('teachers')}</th>
+              <th className="px-3 py-2">{t('website')}</th>
             </tr>
           </thead>
           <tbody>
@@ -132,7 +135,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
                       rel="noopener noreferrer"
                       className="text-(--color-teal) underline hover:text-(--color-rose)"
                     >
-                      Visit
+                      {t('visit')}
                     </Link>
                   ) : (
                     <span className="text-(--color-brand)/60">—</span>
@@ -143,7 +146,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
             {filtered.length === 0 && (
               <tr>
                 <td className="px-3 py-6 text-center text-(--color-brand)/70" colSpan={7}>
-                  No events match your filters.
+                  {t('no_events')}
                 </td>
               </tr>
             )}
@@ -163,7 +166,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
         aria-expanded={open}
         aria-controls="past-events"
       >
-        {open ? "Hide Past Events ⬆️" : "Show Past Events ⬇️"}
+        {open ? t('hide_past_events') : t('show_past_events')}
       </button>
       <div id="past-events" hidden={!open} className="mt-4">
         {section}

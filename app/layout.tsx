@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Merriweather } from "next/font/google"
 import "./globals.css"
+import { LanguageProvider } from "@/components/language-context"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${merriweather.variable} antialiased`}>
-      <body className="bg-(--color-cream) text-(--color-brand) font-sans">{children}</body>
+      <body className="bg-(--color-cream) text-(--color-brand) font-sans">
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   )
 }
