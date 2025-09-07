@@ -28,18 +28,18 @@ export default function HomePage() {
       </div>
 
       {/* Sidebar Filters (shared for both sections) */}
-      <FiltersSidebar filters={filters} setFilters={setFilters} />
+      <FiltersSidebar filters={filters} setFilters={setFilters} lang={lang} />
 
       {/* Upcoming Events */}
       <section className="mb-10">
         <h2 className="text-xl font-bold mb-4">{lang === "en" ? "Upcoming Events" : "Предстоящие события"}</h2>
-        <EventsTable title="" events={upcoming} />
+        <EventsTable title="" events={upcoming} lang={lang} />
       </section>
 
       {/* Past Events */}
       <section>
         <h2 className="text-xl font-bold mb-4">{lang === "en" ? "Past Events" : "Прошедшие события"}</h2>
-        <EventsTable title="" events={past} collapsible />
+        <EventsTable title="" events={past} collapsible lang={lang} />
       </section>
     </div>
   );
