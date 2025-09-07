@@ -2,8 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-export default function FiltersSidebar({ filters, setFilters }: any) {
+export default function FiltersSidebar({ filters, setFilters, lang = "en" }: any) {
   const [open, setOpen] = useState(false);
+  const tt = {
+    filters: lang === "en" ? "Filters" : "Фильтры",
+    type: lang === "en" ? "Type" : "Тип",
+    teachers: lang === "en" ? "Teachers" : "Преподаватели",
+    clearAll: lang === "en" ? "Clear All" : "Сбросить",
+  };
 
   const toggleSidebar = () => setOpen(!open);
 
@@ -16,7 +22,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
           onClick={toggleSidebar}
           className="shadow-sm"
         >
-          Filters
+          {tt.filters}
         </Button>
       </div>
 
@@ -35,7 +41,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
         }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-semibold">Filters</h2>
+          <h2 className="text-lg font-semibold">{tt.filters}</h2>
           <button onClick={toggleSidebar}>
             <X className="w-5 h-5" />
           </button>
@@ -44,7 +50,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
         <div className="p-4 space-y-6">
           {/* Type */}
           <div>
-            <h3 className="text-sm font-medium mb-2">Type</h3>
+            <h3 className="text-sm font-medium mb-2">{tt.type}</h3>
             <div className="flex flex-col gap-2">
               {["Event", "Festival", "Retreat"].map((type) => (
                 <label key={type} className="flex items-center gap-2">
@@ -66,7 +72,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
 
           {/* Teachers */}
           <div>
-            <h3 className="text-sm font-medium mb-2">Teachers</h3>
+            <h3 className="text-sm font-medium mb-2">{tt.teachers}</h3>
             <div className="flex flex-col gap-2">
               {["Moria Chappell", "Zoe Jakes", "Illan Rivière"].map(
                 (teacher) => (
@@ -94,7 +100,7 @@ export default function FiltersSidebar({ filters, setFilters }: any) {
             onClick={() => setFilters({ type: [], teachers: [] })}
             className="w-full"
           >
-            Clear All
+            {tt.clearAll}
           </Button>
         </div>
       </div>
