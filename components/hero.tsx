@@ -26,7 +26,7 @@ export function Hero({ lang = "en", onLangChange }: HeroProps) {
         </div>
 
         <h1 className="h-serif text-balance text-3xl md:text-5xl font-bold text-(--color-brand)">
-          {lang === "en" ? "TFBD Map 🌍 : One Global Map. One Global Community." : "TFBD Map 🌍: Одна глобальная карта. Одно глобальное сообщество."}
+          {lang === "en" ? "TFBD Map 🌍 : One Global Map. One Global Community." : "Карта ТФБД 🌍: Одна глобальная карта. Одно глобальное сообщество."}
         </h1>
         <p className="mt-4 max-w-2xl text-pretty text-base md:text-lg leading-relaxed text-(--color-brand)">
           {
