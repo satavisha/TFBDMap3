@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-const TELEGRAM_URL = "https://t.me/TFBDMap" // TODO: replace with your real Telegram invite link
+const TELEGRAM_URL = "https://telegram.me/TFBDMap" // TODO: replace with your real Telegram invite link
 
 type HeroProps = {
   lang?: "en" | "ru";

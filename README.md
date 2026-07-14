@@ -3,7 +3,7 @@
 A global aggregation platform to increase the visibility and reach of dance events worldwide.
 
 - **Website**: [tfbdmap.vercel.app](https://tfbdmap.vercel.app/)
-- **Telegram channel**: [t.me/TFBDMap](https://t.me/TFBDMap)
+- **Telegram channel**: [t.me/TFBDMap](https://telegram.me/TFBDMap)
 
 ### Features
 
