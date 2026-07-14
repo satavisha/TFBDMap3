@@ -6,4 +6,5 @@ export type EventItem = {
   "End date": string
   Teachers: string
   Website: string
+  Highlight?: string
 }

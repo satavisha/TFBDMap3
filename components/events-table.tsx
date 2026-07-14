@@ -40,6 +40,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
     startDate: lang === "en" ? "Start Date" : "Дата начала",
     endDate: lang === "en" ? "End Date" : "Дата окончания",
     website: lang === "en" ? "Website" : "Сайт",
+    highlight: lang === "en" ? "Highlight" : "Особенности",
     visit: lang === "en" ? "Visit" : "Перейти",
     hidePast: lang === "en" ? "Hide Past Events ⬆️" : "Скрыть прошедшие события ⬆️",
     showPast: lang === "en" ? "Show Past Events ⬇️" : "Показать прошедшие события ⬇️",
@@ -131,6 +132,7 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
               <th className="px-3 py-2">{tt.endDate}</th>
               <th className="px-3 py-2">{tt.teachers}</th>
               <th className="px-3 py-2">{tt.website}</th>
+              <th className="px-3 py-2">{tt.highlight}</th>
             </tr>
           </thead>
           <tbody>
@@ -156,11 +158,12 @@ export function EventsTable({ title, events, defaultOpen = true, collapsible = f
                     <span className="text-(--color-brand)/60">—</span>
                   )}
                 </td>
+                <td className="px-3 py-2">{e.Highlight || "—"}</td>
               </tr>
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td className="px-3 py-6 text-center text-(--color-brand)/70" colSpan={7}>
+                <td className="px-3 py-6 text-center text-(--color-brand)/70" colSpan={8}>
                   {tt.noEvents}
                 </td>
               </tr>
