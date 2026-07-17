@@ -1,191 +1,27 @@
 "use client"
-
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import type { EventItem } from "./types"
+import { ChevronDown, ExternalLink, Search, SlidersHorizontal } from "lucide-react"
 import { applyFilters, useFilters } from "./filters"
-
-type Props = {
-  title: string
-  events: EventItem[]
-  defaultOpen?: boolean
-  collapsible?: boolean
-  lang?: "en" | "ru"
-}
+import type { EventItem } from "./types"
+type Props = { title: string; events: EventItem[]; defaultOpen?: boolean; collapsible?: boolean; lang?: "en" | "ru" }
 
 export function EventsTable({ title, events, defaultOpen = true, collapsible = false, lang = "en" }: Props) {
   const [open, setOpen] = useState(defaultOpen)
-  const {
-    filters,
-    setQuery,
-    setLocation,
-    toggleType,
-    toggleTeacher,
-    clearAll,
-    locations,
-    typeOptions,
-    teacherOptions,
-  } = useFilters(events)
-
+  const { filters, setQuery, setLocation, toggleType, toggleTeacher, clearAll, locations, typeOptions, teacherOptions } = useFilters(events)
   const filtered = useMemo(() => applyFilters(events, filters), [events, filters])
-
-  const tt = {
-    search: lang === "en" ? "Search all fields..." : "Поиск по всем полям...",
-    filterByLocation: lang === "en" ? "Filter by location" : "Фильтр по локации",
-    type: lang === "en" ? "Type" : "Тип",
-    teachers: lang === "en" ? "Teachers" : "Преподаватели",
-    clear: lang === "en" ? "Clear" : "Очистить",
-    eventName: lang === "en" ? "Event Name" : "Название события",
-    location: lang === "en" ? "Location" : "Место",
-    startDate: lang === "en" ? "Start Date" : "Дата начала",
-    endDate: lang === "en" ? "End Date" : "Дата окончания",
-    website: lang === "en" ? "Website" : "Сайт",
-    visit: lang === "en" ? "Visit" : "Перейти",
-    hidePast: lang === "en" ? "Hide Past Events ⬆️" : "Скрыть прошедшие события ⬆️",
-    showPast: lang === "en" ? "Show Past Events ⬇️" : "Показать прошедшие события ⬇️",
-    noEvents: lang === "en" ? "No events match your filters." : "Нет событий по текущим фильтрам.",
-  }
-
-  const section = (
-    <section aria-label={title} className="mx-auto max-w-6xl px-4">
-      <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <h2 className="h-serif text-2xl md:text-3xl font-semibold text-(--color-brand)">{title}</h2>
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <input
-            type="search"
-            placeholder={tt.search}
-            value={filters.query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full md:w-64 rounded-md border border-(--color-brand)/20 bg-white px-3 py-2 text-sm text-(--color-brand) placeholder:text-(--color-brand)/50 focus:outline-none focus:ring-2 focus:ring-(--color-teal)"
-            aria-label={tt.search}
-          />
-
-          <div className="flex flex-wrap gap-2">
-            <select
-              value={filters.location}
-              onChange={(e) => setLocation(e.target.value as any)}
-              className="rounded-md border border-(--color-brand)/20 bg-white px-3 py-2 text-sm text-(--color-brand) focus:outline-none focus:ring-2 focus:ring-(--color-teal)"
-              aria-label={tt.filterByLocation}
-            >
-              {locations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
-
-            <details className="rounded-md border border-(--color-brand)/20 bg-white text-sm open:ring-2 open:ring-(--color-teal)">
-              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">{tt.type}</summary>
-              <div className="max-h-56 w-56 overflow-auto p-3">
-                {typeOptions.map((t) => {
-                  const checked = filters.types.has(t)
-                  return (
-                    <label key={t} className="mb-2 flex items-center gap-2 text-(--color-brand)">
-                      <input type="checkbox" checked={checked} onChange={() => toggleType(t)} aria-checked={checked} />
-                      <span>{t}</span>
-                    </label>
-                  )
-                })}
-              </div>
-            </details>
-
-            <details className="rounded-md border border-(--color-brand)/20 bg-white text-sm open:ring-2 open:ring-(--color-teal)">
-              <summary className="cursor-pointer select-none px-3 py-2 text-(--color-brand)">{tt.teachers}</summary>
-              <div className="max-h-56 w-64 overflow-auto p-3">
-                {teacherOptions.map((t) => {
-                  const checked = filters.teachers.has(t)
-                  return (
-                    <label key={t} className="mb-2 flex items-center gap-2 text-(--color-brand)">
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => toggleTeacher(t)}
-                        aria-checked={checked}
-                      />
-                      <span>{t}</span>
-                    </label>
-                  )
-                })}
-              </div>
-            </details>
-
-            <button
-              onClick={clearAll}
-              className="rounded-md border border-(--color-brand)/20 bg-white px-3 py-2 text-sm text-(--color-brand) hover:bg-(--color-gold)/20"
-              aria-label={tt.clear}
-            >
-              {tt.clear}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="overflow-x-auto rounded-lg border border-(--color-brand)/15 bg-white">
-        <table className="min-w-full text-sm">
-          <thead className="bg-(--color-cream)">
-            <tr className="text-left text-(--color-brand)">
-              <th className="px-3 py-2">{tt.eventName}</th>
-              <th className="px-3 py-2">{tt.type}</th>
-              <th className="px-3 py-2">{tt.location}</th>
-              <th className="px-3 py-2">{tt.startDate}</th>
-              <th className="px-3 py-2">{tt.endDate}</th>
-              <th className="px-3 py-2">{tt.teachers}</th>
-              <th className="px-3 py-2">{tt.website}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((e, idx) => (
-              <tr key={`${e.Name}-${idx}`} className="border-t border-(--color-brand)/10 text-(--color-brand)">
-                <td className="px-3 py-2">{e.Name}</td>
-                <td className="px-3 py-2">{e.Type}</td>
-                <td className="px-3 py-2">{e.Location}</td>
-                <td className="px-3 py-2">{e["Start date"]}</td>
-                <td className="px-3 py-2">{e["End date"]}</td>
-                <td className="px-3 py-2">{e.Teachers}</td>
-                <td className="px-3 py-2">
-                  {e.Website ? (
-                    <Link
-                      href={e.Website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-(--color-teal) underline hover:text-(--color-rose)"
-                    >
-                      {tt.visit}
-                    </Link>
-                  ) : (
-                    <span className="text-(--color-brand)/60">—</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {filtered.length === 0 && (
-              <tr>
-                <td className="px-3 py-6 text-center text-(--color-brand)/70" colSpan={7}>
-                  {tt.noEvents}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  )
-
+  const ru = lang === "ru"
+  const tt = { search: ru ? "\u041f\u043e\u0438\u0441\u043a \u043f\u043e \u0432\u0441\u0435\u043c \u043f\u043e\u043b\u044f\u043c..." : "Search all fields...", location: ru ? "\u041c\u0435\u0441\u0442\u043e" : "Location", type: ru ? "\u0422\u0438\u043f" : "Type", teachers: ru ? "\u041f\u0440\u0435\u043f\u043e\u0434\u0430\u0432\u0430\u0442\u0435\u043b\u0438" : "Teachers", clear: ru ? "\u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c" : "Clear", visit: ru ? "\u041f\u0435\u0440\u0435\u0439\u0442\u0438" : "Visit", noEvents: ru ? "\u041d\u0435\u0442 \u0441\u043e\u0431\u044b\u0442\u0438\u0439 \u043f\u043e \u0442\u0435\u043a\u0443\u0449\u0438\u043c \u0444\u0438\u043b\u044c\u0442\u0440\u0430\u043c." : "No events match your filters.", hidePast: ru ? "\u0421\u043a\u0440\u044b\u0442\u044c \u043f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435" : "Hide past events", showPast: ru ? "\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u043f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435" : "Show past events" }
+  const section = <section aria-label={title} className="events-section"><div className="events-heading"><div className="events-title-row"><h2 className="section-title section-title-small">{title}</h2><span className="result-count">{filtered.length} {ru ? "\u043d\u0430\u0439\u0434\u0435\u043d\u043e" : "listed"}</span></div>
+    <div className="filters-toolbar"><label className="search-field"><Search size={17} aria-hidden="true" /><span className="sr-only">{tt.search}</span><input type="search" placeholder={tt.search} value={filters.query} onChange={(e) => setQuery(e.target.value)} className="search-input" /></label><div className="filter-actions"><select value={filters.location} onChange={(e) => setLocation(e.target.value as any)} className="filter-select" aria-label={tt.location}>{locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}</select>
+      <details className="filter-menu"><summary><SlidersHorizontal size={15} />{tt.type}<ChevronDown size={14} /></summary><div className="filter-menu-panel">{typeOptions.map((t) => <label key={t} className="filter-check"><input type="checkbox" checked={filters.types.has(t)} onChange={() => toggleType(t)} /><span>{t}</span></label>)}</div></details>
+      <details className="filter-menu"><summary><SlidersHorizontal size={15} />{tt.teachers}<ChevronDown size={14} /></summary><div className="filter-menu-panel teacher-panel">{teacherOptions.map((t) => <label key={t} className="filter-check"><input type="checkbox" checked={filters.teachers.has(t)} onChange={() => toggleTeacher(t)} /><span>{t}</span></label>)}</div></details>
+      <button onClick={clearAll} className="clear-button">{tt.clear}</button></div></div></div>
+    <div className="events-table-wrap"><table className="events-table"><thead><tr><th>Event</th><th>{tt.type}</th><th>{tt.location}</th><th>Start</th><th>End</th><th>{tt.teachers}</th><th>Web</th></tr></thead><tbody>
+      {filtered.map((e, idx) => <tr key={e.Name + idx}><td className="event-name">{e.Name}<span>{e.Type}</span></td><td className="event-type">{e.Type}</td><td>{e.Location}</td><td>{e["Start date"]}</td><td>{e["End date"]}</td><td className="event-teachers">{e.Teachers}</td><td>{e.Website ? <Link href={e.Website} target="_blank" rel="noopener noreferrer" className="visit-link"><span>{tt.visit}</span><ExternalLink size={14} /></Link> : <span className="muted-dash">-</span>}</td></tr>)}
+      {filtered.length === 0 && <tr><td className="empty-state" colSpan={7}>{tt.noEvents}</td></tr>}</tbody></table>
+      <div className="event-cards">{filtered.map((e, idx) => <article className="event-card" key={"card-" + e.Name + idx}><div className="event-card-top"><span className="event-type-pill">{e.Type}</span><span className="event-card-date">{e["Start date"]}</span></div><h3>{e.Name}</h3><p className="event-card-meta"><span>{e.Location}</span><span>{e.Teachers}</span></p><div className="event-card-bottom"><span>{e["Start date"] + " - " + e["End date"]}</span>{e.Website && <Link href={e.Website} target="_blank" rel="noopener noreferrer" className="visit-link"><span>{tt.visit}</span><ExternalLink size={14} /></Link>}</div></article>)}{filtered.length === 0 && <div className="empty-state event-empty">{tt.noEvents}</div>}</div></div>
+  </section>
   if (!collapsible) return section
-
-  return (
-    <div className="mx-auto max-w-6xl px-4">
-      <button
-        className="mt-8 w-full rounded-md border border-(--color-brand)/20 bg-white px-4 py-3 text-left text-(--color-brand) hover:bg-(--color-gold)/20 md:w-auto"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        aria-controls="past-events"
-      >
-        {open ? tt.hidePast : tt.showPast}
-      </button>
-      <div id="past-events" hidden={!open} className="mt-4">
-        {section}
-      </div>
-    </div>
-  )
+  return <div className="past-events-wrap"><button className="past-toggle" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="past-events"><span>{open ? tt.hidePast : tt.showPast}</span><ChevronDown size={16} className={open ? "chevron-up" : ""} /></button><div id="past-events" hidden={!open} className="past-events-content">{section}</div></div>
 }
