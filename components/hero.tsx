@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
+import { LogoMorph } from "@/components/logo-morph"
 
 const TELEGRAM_URL = "https://telegram.me/TFBDMap"
 
@@ -51,8 +51,8 @@ export function Hero({ lang = "en", onLangChange, animated = false }: HeroProps)
             </Link>
           </div>
         </div>
-        <div className={`hero-original-art ${animated && floating ? "v2-art-hidden" : ""}`} aria-label="TFBD Map logo">
-          <Image src="/logo-square.png" alt="TFBD Map logo" fill priority sizes="(max-width: 800px) 70vw, 360px" className={`hero-original-logo ${animated && floating ? "v2-floating-logo" : ""}`} style={logoStyle} />
+        <div className={`hero-original-art ${animated && floating ? "v2-art-hidden" : ""}`}>
+          <LogoMorph className={`hero-original-logo ${animated && floating ? "v2-floating-logo" : ""}`} style={logoStyle} />
         </div>
         <button
           onClick={() => onLangChange?.(lang === "en" ? "ru" : "en")}
