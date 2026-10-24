@@ -18,6 +18,17 @@ export function getEndDate(e: EventItem): Date | null {
   return parseDDMMYYYY(e["End date"])
 }
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+// Display as dd-Mmm-yy, e.g. 20-Jan-27
+export function formatDate(value: string): string {
+  const d = parseDDMMYYYY(value)
+  if (!d) return value
+  const dd = String(d.getDate()).padStart(2, "0")
+  const yy = String(d.getFullYear() % 100).padStart(2, "0")
+  return `${dd}-${MONTHS[d.getMonth()]}-${yy}`
+}
+
 export function splitEvents(events: EventItem[]) {
   const today = new Date()
   const upcoming: EventItem[] = []

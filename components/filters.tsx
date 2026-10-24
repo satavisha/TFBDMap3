@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import type { EventItem } from "./types"
-import { uniqueSorted } from "./event-helpers"
+import { formatDate, uniqueSorted } from "./event-helpers"
 
 export type Filters = {
   query: string
@@ -72,7 +72,7 @@ export function applyFilters(events: EventItem[], f: Filters) {
   return events.filter((e) => {
     // Global search
     const hay =
-      `${e.Name} ${e.Type} ${e.Location} ${e["Start date"]} ${e["End date"]} ${e.Teachers} ${e.Website}`.toLowerCase()
+      `${e.Name} ${e.Type} ${e.Location} ${e["Start date"]} ${e["End date"]} ${formatDate(e["Start date"])} ${formatDate(e["End date"])} ${e.Teachers} ${e.Website}`.toLowerCase()
     if (q && !hay.includes(q)) return false
 
     // Location single-select
