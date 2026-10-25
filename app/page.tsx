@@ -5,6 +5,7 @@ import { useEvents } from "@/components/use-events";
 import { splitEvents } from "@/components/event-helpers";
 import type { Lang } from "@/components/translator";
 import { Hero } from "@/components/hero";
+import { Ticker } from "@/components/ticker";
 
 export default function HomePage() {
   const [lang, setLang] = useState<Lang>("en");
@@ -13,6 +14,7 @@ export default function HomePage() {
   const locations = new Set(events.map((event) => event.Location).filter(Boolean));
   return <div className="site-shell">
     <Hero lang={lang} onLangChange={setLang} eventCount={events.length} locationCount={locations.size} />
+    <Ticker items={[`${upcoming.length} ${lang === "en" ? "upcoming events" : "\u0441\u043e\u0431\u044b\u0442\u0438\u0439"}`, ...Array.from(locations)]} />
     <main className="content-wrap">
       <EventsTable title={lang === "en" ? "Upcoming Events" : "\u041f\u0440\u0435\u0434\u0441\u0442\u043e\u044f\u0449\u0438\u0435 \u0441\u043e\u0431\u044b\u0442\u0438\u044f"} events={upcoming} lang={lang} />
       <EventsTable title={lang === "en" ? "Past Events" : "\u041f\u0440\u043e\u0448\u0435\u0434\u0448\u0438\u0435 \u0441\u043e\u0431\u044b\u0442\u0438\u044f"} events={past} collapsible lang={lang} />

@@ -1,7 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Merriweather } from "next/font/google"
+import { Inter, Merriweather, Fraunces } from "next/font/google"
 import "./globals.css"
+import "./themes.css"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +16,8 @@ const merriweather = Merriweather({
   variable: "--font-merriweather",
 })
 
+const fraunces = Fraunces({ subsets: ["latin"], axes: ["SOFT", "WONK"], display: "swap", variable: "--font-fraunces" })
+
 export const metadata: Metadata = {
   title: "TFBD Events",
   description: "Global hub for Tribal Fusion Belly Dance events",
@@ -27,8 +30,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${merriweather.variable} antialiased`}>
-      <body className="bg-(--color-cream) text-(--color-brand) font-sans">{children}</body>
+    <html
+      lang="en"
+      data-theme="bloom"
+      className={`${inter.variable} ${merriweather.variable} ${fraunces.variable} antialiased`}
+    >
+      <body className="bg-(--color-cream) text-(--color-brand) font-sans">
+        {children}
+      </body>
     </html>
   )
 }
