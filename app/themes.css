@@ -122,6 +122,16 @@ html[data-theme="bloom"] {
 }
 
 @media (max-width: 800px) {
+  /* Compact filter bar: the search box's 260px flex-basis was becoming its height in the stacked layout */
+  html[data-theme="bloom"] {
+    .filters-toolbar { gap: .4rem; padding: .5rem; border-radius: 20px; }
+    .search-field { flex: 0 0 auto; min-width: 0; min-height: 40px; }
+    .filter-actions { flex-wrap: nowrap; gap: .35rem; }
+    .filter-select { flex: 1 1 0; min-width: 0; }
+    .filter-menu summary { padding-inline: .6rem; }
+    .filter-menu summary svg:first-child { display: none; }
+    .clear-button { padding-inline: .65rem; }
+  }
   html[data-theme="bloom"] .event-cards { grid-template-columns: 1fr; padding-top: .6rem; }
   html[data-theme="bloom"] .event-card { padding: 1.1rem; }
 }
